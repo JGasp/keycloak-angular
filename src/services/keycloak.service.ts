@@ -324,8 +324,10 @@ export class KeycloakService {
         headers = new HttpHeaders();
       }
       try {
-        const token: string = await this.getToken();
-        headers = headers.set('Authorization', 'bearer ' + token);
+        if (this.instance.authenticated) {
+          const token: string = await this.getToken();
+          headers = headers.set('Authorization', 'bearer ' + token);
+        }
         observer.next(headers);
         observer.complete();
       } catch (error) {

@@ -61,5 +61,9 @@
   "angularCompilerOptions": {
     "genDir": "./build/keycloak-angular"
   },
-  "exclude": ["**/*.spec.ts", "./examples/**", "./node_modules/**"]
+  "exclude": ["**/*.spec.ts", "./examples/**", "./node_modules/**"],
+  "include": [
+    "node_modules/keycloak-js",
+    "src"
+  ]
 }
