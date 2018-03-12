@@ -177,7 +177,7 @@ export class KeycloakService {
    */
   getUserRoles(allRoles: boolean = true): string[] {
     let roles: string[] = [];
-    if (this.instance.resourceAccess) {
+    if (this.instance.authenticated && this.instance.resourceAccess) {
       for (const key in this.instance.resourceAccess) {
         if (this.instance.resourceAccess.hasOwnProperty(key)) {
           const resourceAccess: any = this.instance.resourceAccess[key];
@@ -199,10 +199,14 @@ export class KeycloakService {
    */
   isLoggedIn(): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
-      try {
-        await this.updateToken(20);
-        resolve(true);
-      } catch (error) {
+      if (this.instance.authenticated){
+          try {
+              await this.updateToken(20);
+              resolve(true);
+          } catch (error) {
+              resolve(false);
+          }
+      } else {
         resolve(false);
       }
     });
